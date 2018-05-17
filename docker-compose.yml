@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  shiny:
+    image: rocker/shiny
+    depends_on:
+      - python
+    # Environment variables
+    ports:
+      - "80:3838"
+    volumes:
+      - ./tweetminer:/srv/shiny-server
+    working_dir: /srv/shiny-server
+    restart: always
+
+  python:
+    build: ./tweetminer
+    volumes:
+      - ./tweetminer/data:/usr/src/app/data
+    working_dir: /usr/src/app
+    restart: always
